@@ -18,7 +18,8 @@ public class UtilMD5 {
 
         final char[] HEX_DIGITS = "0123456789ABCDEF".toCharArray();
         StringBuilder ret = new StringBuilder(bytes.length * 2);
-        ret.insert(0,(int) Math.random()*100);
+        int random = (int) (Math.random()*100);
+        ret.append(random);
         for (int i=0; i<bytes.length; i++) {
             ret.append(HEX_DIGITS[(bytes[i] >> 4) & 0x0f]);
             ret.append(HEX_DIGITS[bytes[i] & 0x0f]);

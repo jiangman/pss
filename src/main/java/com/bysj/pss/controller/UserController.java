@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
-@RestController(value = "/bysj/pss")
+@RestController
+@RequestMapping(value = "/bysj/pss")
 public class UserController {
 
     @Autowired

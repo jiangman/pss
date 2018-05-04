@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     @Autowired
     public UserMapper userMapper;
 
@@ -24,23 +25,36 @@ public class UserServiceImpl implements UserService {
             return new ReturnValue<String>(ReturnCodeAndMsg.PARA_EMPTY);
         }
         try {
-            Long mobileNumber = Long.getLong(mobile);
+            Long mobileNumber = Long.valueOf(mobile);
             User user = userMapper.selectByPrimaryKey(mobileNumber);
-            if (user.getUserPassword().equals(password)) {
+            if (user!=null&&user.getUserPassword().equals(password)) {
                 String token = UtilMD5.MD5(user.getUserPassword());
                 user.setToken(token);
                 userMapper.updateByPrimaryKeySelective(user);
                 return new ReturnValue<String>(ReturnCodeAndMsg.SUCCESS, token);
             }
         } catch (Exception e) {
-            logger.error("mobile number tranfer error", e);
+            logger.error("DB CONNECT ERROR", e);
             return new ReturnValue<String>(ReturnCodeAndMsg.DB_CONNECT_ERROR);
         }
         return new ReturnValue<String>(ReturnCodeAndMsg.LOGIN_ERROR);
     }
 
     @Override
-    public ReturnValue<String> isLogin(String token) {
-        return null;
+    public boolean isLogin(String mobile,String token) {
+        if (mobile == null || token == null) {
+            return false;
+        }
+        try {
+            Long mobileNumber = Long.valueOf(mobile);
+            User user = userMapper.selectByPrimaryKey(mobileNumber);
+            if (user!=null&&user.getToken().equals(token)) {
+                return true;
+            }
+        } catch (Exception e) {
+            logger.error("DB CONNECT ERROR", e);
+            return false;
+        }
+        return false;
     }
 }
