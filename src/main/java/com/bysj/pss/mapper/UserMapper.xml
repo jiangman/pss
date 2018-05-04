@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bysj.pss.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.bysj.pss.model.pojo.User">
+        <id column="mobile_number" property="mobileNumber" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_password" property="userPassword" jdbcType="VARCHAR"/>
+        <result column="user_sex" property="userSex" jdbcType="CHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="department" property="department" jdbcType="CHAR"/>
+        <result column="position" property="position" jdbcType="CHAR"/>
+        <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="token" property="token" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    mobile_number, user_name, user_password, user_sex, email, department, position, token
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where mobile_number = #{mobileNumber,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where mobile_number = #{mobileNumber,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.bysj.pss.model.pojo.User">
+        insert into user (mobile_number ,user_name, user_password, user_sex,
+        email, department, position, token
+        )
+        values (#{mobileNumber,jdbcType=BIGINT},#{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{userSex,jdbcType=CHAR},
+        #{email,jdbcType=VARCHAR}, #{department,jdbcType=CHAR}, #{position,jdbcType=CHAR}, #{token,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.bysj.pss.model.pojo.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mobileNumber != null">
+                mobile_number,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="userPassword != null">
+                user_password,
+            </if>
+            <if test="userSex != null">
+                user_sex,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="department != null">
+                department,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="token != null">
+                token,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mobileNumber != null">
+                #{mobileNumber,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null">
+                #{userSex,jdbcType=CHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null">
+                #{department,jdbcType=CHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=CHAR},
+            </if>
+            <if test="token != null">
+                #{token,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.bysj.pss.model.pojo.User">
+        update user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                user_password = #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null">
+                user_sex = #{userSex,jdbcType=CHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null">
+                department = #{department,jdbcType=CHAR},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=CHAR},
+            </if>
+            <if test="token != null">
+                token = #{token,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where mobile_number = #{mobileNumber,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.bysj.pss.model.pojo.User">
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_sex = #{userSex,jdbcType=CHAR},
+      email = #{email,jdbcType=VARCHAR},
+      department = #{department,jdbcType=CHAR},
+      position = #{position,jdbcType=CHAR},
+      token = #{token,jdbcType=VARCHAR}
+    where mobile_number = #{mobileNumber,jdbcType=BIGINT}
+  </update>
+</mapper>

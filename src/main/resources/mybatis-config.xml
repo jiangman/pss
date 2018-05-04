@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="application.properties">
+        <!-- properties中还可以配置一些属性名和属性值,此处的优先加载 -->
+        <!-- <property name="driver" value=""/> -->
+    </properties>
+
+    <typeAliases>
+        <package name="main.java.com.bysj.pss.model" />
+    </typeAliases>
+    <!-- 和spring整合后 environments配置将废除-->
+    <environments default="development">
+        <environment id="development">
+            <!-- 使用jdbc事务管理,事务控制由mybatis管理-->
+            <transactionManager type="JDBC"/>
+            <!-- 数据库连接池,由mybatis管理-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${spring.datasource.driverClassName}"/>
+                <property name="url" value="${spring.datasource.url}"/>
+                <property name="username" value="${spring.datasource.username}"/>
+                <property name="password" value="${spring.datasource.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--扫描包路径下所有xxMapper.xml文件-->
+        <mapper resource="com/bysj/pss/mapper/UserMapper.xml"/>
+        <!--<package name="main.java.com.bysj.pss.mapper"/>-->
+    </mappers>
+</configuration>
