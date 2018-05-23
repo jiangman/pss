@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bysj.pss.mapper.MeterialOutMapper" >
+  <resultMap id="BaseResultMap" type="com.bysj.pss.model.pojo.MeterialOut" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="medicine_produce_fk" property="medicineProduceFk" jdbcType="INTEGER" />
+    <result column="meterial_fk" property="meterialFk" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="DOUBLE" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, medicine_produce_fk, meterial_fk, number, time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from meterial_out
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getAllMeterialOut" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from meterial_out
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from meterial_out
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bysj.pss.model.pojo.MeterialOut" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into meterial_out (medicine_produce_fk,meterial_fk,number,time)
+    values (#{medicineProduceFk,jdbcType=INTEGER},#{meterialFk,jdbcType=INTEGER},#{number,jdbcType=DOUBLE},
+      #{time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bysj.pss.model.pojo.MeterialOut" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into meterial_out
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="medicineProduceFk != null" >
+        medicine_produce_fk,
+      </if>
+      <if test="meterialFk != null" >
+        meterial_fk,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="medicineProduceFk != null" >
+        #{medicineProduceFk,jdbcType=INTEGER},
+      </if>
+      <if test="meterialFk != null" >
+        #{meterialFk,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=DOUBLE},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertMeterialOutList" parameterType="java.util.List">
+    INSERT INTO meterial_out (medicine_produce_fk,meterial_fk,number,time)
+    VALUES
+    <foreach collection="meterialOutList" item="meterial" separator=",">
+    (#{meterial.medicineProduceFk,jdbcType=INTEGER},#{meterial.meterialFk,jdbcType=INTEGER},
+      #{meterial.number,jdbcType=DOUBLE},#{meterial.time,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bysj.pss.model.pojo.MeterialOut" >
+    update meterial_out
+    <set >
+      <if test="medicineProduceFk != null" >
+        medicine_produce_fk = #{medicineProduceFk,jdbcType=INTEGER},
+      </if>
+      <if test="meterialFk != null" >
+        meterial_fk = #{meterialFk,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=DOUBLE},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bysj.pss.model.pojo.MeterialOut" >
+    update meterial_out
+    set medicine_produce_fk = #{medicineProduceFk,jdbcType=INTEGER},
+      meterial_fk = #{meterialFk,jdbcType=INTEGER},
+      number = #{number,jdbcType=DOUBLE},
+      time = #{time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

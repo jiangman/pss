@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bysj.pss.mapper.MedicineMapper" >
+  <resultMap id="BaseResultMap" type="com.bysj.pss.model.pojo.Medicine" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="medicine_name" property="medicineName" jdbcType="VARCHAR" />
+    <result column="medicine_other_name" property="medicineOtherName" jdbcType="VARCHAR" />
+    <result column="license_no" property="licenseNo" jdbcType="VARCHAR" />
+    <result column="trade_price" property="tradePrice" jdbcType="DOUBLE" />
+    <result column="retail_price" property="retailPrice" jdbcType="DOUBLE" />
+    <result column="size_num" property="sizeNum" jdbcType="INTEGER" />
+    <result column="size" property="size" jdbcType="VARCHAR" />
+    <result column="saveway" property="saveway" jdbcType="VARCHAR" />
+    <result column="validity_period" property="validityPeriod" jdbcType="TINYINT" />
+    <result column="picture_path" property="picturePath" jdbcType="VARCHAR" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, medicine_name, medicine_other_name, license_no, trade_price, retail_price, size_num, 
+    size, saveway, validity_period, picture_path, introduce
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from medicine
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getAllMedicine" resultType="com.bysj.pss.model.pojo.Medicine" >
+    select * from medicine
+  </select>
+  <select id="search" resultType="com.bysj.pss.model.pojo.Medicine">
+    SELECT * FROM medicine WHERE medicine_name LIKE "%"#{content,jdbcType=VARCHAR}"%"
+    OR medicine_other_name LIKE "%"#{content,jdbcType=VARCHAR}"%"
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from medicine
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bysj.pss.model.pojo.Medicine" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into medicine (medicine_name, medicine_other_name, 
+      license_no, trade_price, retail_price, 
+      size_num, size, saveway, 
+      validity_period, picture_path, introduce
+      )
+    values (#{medicineName,jdbcType=VARCHAR}, #{medicineOtherName,jdbcType=VARCHAR}, 
+      #{licenseNo,jdbcType=VARCHAR}, #{tradePrice,jdbcType=DOUBLE}, #{retailPrice,jdbcType=DOUBLE}, 
+      #{sizeNum,jdbcType=INTEGER}, #{size,jdbcType=VARCHAR}, #{saveway,jdbcType=VARCHAR}, 
+      #{validityPeriod,jdbcType=TINYINT}, #{picturePath,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bysj.pss.model.pojo.Medicine" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into medicine
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="medicineName != null" >
+        medicine_name,
+      </if>
+      <if test="medicineOtherName != null" >
+        medicine_other_name,
+      </if>
+      <if test="licenseNo != null" >
+        license_no,
+      </if>
+      <if test="tradePrice != null" >
+        trade_price,
+      </if>
+      <if test="retailPrice != null" >
+        retail_price,
+      </if>
+      <if test="sizeNum != null" >
+        size_num,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="saveway != null" >
+        saveway,
+      </if>
+      <if test="validityPeriod != null" >
+        validity_period,
+      </if>
+      <if test="picturePath != null" >
+        picture_path,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="medicineName != null" >
+        #{medicineName,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineOtherName != null" >
+        #{medicineOtherName,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNo != null" >
+        #{licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradePrice != null" >
+        #{tradePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="retailPrice != null" >
+        #{retailPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="sizeNum != null" >
+        #{sizeNum,jdbcType=INTEGER},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="saveway != null" >
+        #{saveway,jdbcType=VARCHAR},
+      </if>
+      <if test="validityPeriod != null" >
+        #{validityPeriod,jdbcType=TINYINT},
+      </if>
+      <if test="picturePath != null" >
+        #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bysj.pss.model.pojo.Medicine" >
+    update medicine
+    <set >
+      <if test="medicineName != null" >
+        medicine_name = #{medicineName,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineOtherName != null" >
+        medicine_other_name = #{medicineOtherName,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNo != null" >
+        license_no = #{licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradePrice != null" >
+        trade_price = #{tradePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="retailPrice != null" >
+        retail_price = #{retailPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="sizeNum != null" >
+        size_num = #{sizeNum,jdbcType=INTEGER},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="saveway != null" >
+        saveway = #{saveway,jdbcType=VARCHAR},
+      </if>
+      <if test="validityPeriod != null" >
+        validity_period = #{validityPeriod,jdbcType=TINYINT},
+      </if>
+      <if test="picturePath != null" >
+        picture_path = #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bysj.pss.model.pojo.Medicine" >
+    update medicine
+    set medicine_name = #{medicineName,jdbcType=VARCHAR},
+      medicine_other_name = #{medicineOtherName,jdbcType=VARCHAR},
+      license_no = #{licenseNo,jdbcType=VARCHAR},
+      trade_price = #{tradePrice,jdbcType=DOUBLE},
+      retail_price = #{retailPrice,jdbcType=DOUBLE},
+      size_num = #{sizeNum,jdbcType=INTEGER},
+      size = #{size,jdbcType=VARCHAR},
+      saveway = #{saveway,jdbcType=VARCHAR},
+      validity_period = #{validityPeriod,jdbcType=TINYINT},
+      picture_path = #{picturePath,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

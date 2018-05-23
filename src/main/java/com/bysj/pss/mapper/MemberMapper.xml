@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bysj.pss.mapper.MemberMapper" >
+  <resultMap id="BaseResultMap" type="com.bysj.pss.model.pojo.Member" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mobile_number" property="mobileNumber" jdbcType="BIGINT" />
+    <result column="user_sex" property="userSex" jdbcType="TINYINT" />
+    <result column="card" property="card" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="TINYINT" />
+    <result column="position" property="position" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, mobile_number, user_sex, card, addr, department, position
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getAllMember" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from member
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bysj.pss.model.pojo.Member" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into member (name, mobile_number, user_sex, 
+      card, addr, department, 
+      position)
+    values (#{name,jdbcType=VARCHAR}, #{mobileNumber,jdbcType=BIGINT}, #{userSex,jdbcType=TINYINT}, 
+      #{card,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{department,jdbcType=TINYINT}, 
+      #{position,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bysj.pss.model.pojo.Member" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="mobileNumber != null" >
+        mobile_number,
+      </if>
+      <if test="userSex != null" >
+        user_sex,
+      </if>
+      <if test="card != null" >
+        card,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNumber != null" >
+        #{mobileNumber,jdbcType=BIGINT},
+      </if>
+      <if test="userSex != null" >
+        #{userSex,jdbcType=TINYINT},
+      </if>
+      <if test="card != null" >
+        #{card,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=TINYINT},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bysj.pss.model.pojo.Member" >
+    update member
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNumber != null" >
+        mobile_number = #{mobileNumber,jdbcType=BIGINT},
+      </if>
+      <if test="userSex != null" >
+        user_sex = #{userSex,jdbcType=TINYINT},
+      </if>
+      <if test="card != null" >
+        card = #{card,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=TINYINT},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bysj.pss.model.pojo.Member" >
+    update member
+    set name = #{name,jdbcType=VARCHAR},
+      mobile_number = #{mobileNumber,jdbcType=BIGINT},
+      user_sex = #{userSex,jdbcType=TINYINT},
+      card = #{card,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      department = #{department,jdbcType=TINYINT},
+      position = #{position,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

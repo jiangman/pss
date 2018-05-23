@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bysj.pss.mapper.EnterpriseMapper" >
+  <resultMap id="BaseResultMap" type="com.bysj.pss.model.pojo.Enterprise" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="legal_person" property="legalPerson" jdbcType="VARCHAR" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+    <result column="contact_mobile" property="contactMobile" jdbcType="BIGINT" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="social_credit_code" property="socialCreditCode" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="bank" property="bank" jdbcType="TINYINT" />
+    <result column="bank_count" property="bankCount" jdbcType="VARCHAR" />
+    <result column="tax_number" property="taxNumber" jdbcType="VARCHAR" />
+    <result column="drug_business" property="drugBusiness" jdbcType="VARCHAR" />
+    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, legal_person, contact_name, contact_mobile, email, address, social_credit_code, 
+    type, bank, bank_count, tax_number, drug_business, introduction
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from enterprise
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getListEnterprise" resultType="com.bysj.pss.model.pojo.Enterprise" >
+    SELECT * FROM enterprise
+    <if test="type != 0">
+      WHERE type=#{type,jdbcType=TINYINT}
+    </if>
+  </select>
+  <select id="searchEnterprise" resultType="com.bysj.pss.model.pojo.Enterprise" >
+    SELECT * FROM enterprise
+      WHERE name LIKE "%"#{content,jdbcType=VARCHAR}"%" OR legal_person LIKE "%"#{content,jdbcType=VARCHAR}"%" OR contact_name
+      LIKE "%"#{content,jdbcType=VARCHAR}"%"
+    <if test="phone != 0">
+      OR contact_mobile LIKE "%"#{content,jdbcType=VARCHAR}"%"
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from enterprise
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bysj.pss.model.pojo.Enterprise" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise (name, legal_person, contact_name, 
+      contact_mobile, email, address, 
+      social_credit_code, type, bank, 
+      bank_count, tax_number, drug_business, 
+      introduction)
+    values (#{name,jdbcType=VARCHAR}, #{legalPerson,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR}, 
+      #{contactMobile,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{socialCreditCode,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{bank,jdbcType=TINYINT}, 
+      #{bankCount,jdbcType=VARCHAR}, #{taxNumber,jdbcType=VARCHAR}, #{drugBusiness,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bysj.pss.model.pojo.Enterprise" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into enterprise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="legalPerson != null" >
+        legal_person,
+      </if>
+      <if test="contactName != null" >
+        contact_name,
+      </if>
+      <if test="contactMobile != null" >
+        contact_mobile,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="socialCreditCode != null" >
+        social_credit_code,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="bankCount != null" >
+        bank_count,
+      </if>
+      <if test="taxNumber != null" >
+        tax_number,
+      </if>
+      <if test="drugBusiness != null" >
+        drug_business,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null" >
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactMobile != null" >
+        #{contactMobile,jdbcType=BIGINT},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="socialCreditCode != null" >
+        #{socialCreditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=TINYINT},
+      </if>
+      <if test="bankCount != null" >
+        #{bankCount,jdbcType=VARCHAR},
+      </if>
+      <if test="taxNumber != null" >
+        #{taxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="drugBusiness != null" >
+        #{drugBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bysj.pss.model.pojo.Enterprise" >
+    update enterprise
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        legal_person = #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null" >
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactMobile != null" >
+        contact_mobile = #{contactMobile,jdbcType=BIGINT},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="socialCreditCode != null" >
+        social_credit_code = #{socialCreditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=TINYINT},
+      </if>
+      <if test="bankCount != null" >
+        bank_count = #{bankCount,jdbcType=VARCHAR},
+      </if>
+      <if test="taxNumber != null" >
+        tax_number = #{taxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="drugBusiness != null" >
+        drug_business = #{drugBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bysj.pss.model.pojo.Enterprise" >
+    update enterprise
+    set name = #{name,jdbcType=VARCHAR},
+      legal_person = #{legalPerson,jdbcType=VARCHAR},
+      contact_name = #{contactName,jdbcType=VARCHAR},
+      contact_mobile = #{contactMobile,jdbcType=BIGINT},
+      email = #{email,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      social_credit_code = #{socialCreditCode,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      bank = #{bank,jdbcType=TINYINT},
+      bank_count = #{bankCount,jdbcType=VARCHAR},
+      tax_number = #{taxNumber,jdbcType=VARCHAR},
+      drug_business = #{drugBusiness,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

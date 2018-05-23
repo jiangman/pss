@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bysj.pss.mapper.MedicineProduceMapper" >
+  <resultMap id="BaseResultMap" type="com.bysj.pss.model.pojo.MedicineProduce" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="medicine_produce_id" property="medicineProduceId" jdbcType="VARCHAR" />
+    <result column="medicine_fk" property="medicineFk" jdbcType="INTEGER" />
+    <result column="produce_man" property="produceMan" jdbcType="VARCHAR" />
+    <result column="produce_man_fk" property="produceManFk" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="sale_num" property="saleNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, medicine_produce_id, medicine_fk, produce_man, produce_man_fk, create_time, num, 
+    sale_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from medicine_produce
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getAllMedicineProduce" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from medicine_produce
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from medicine_produce
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bysj.pss.model.pojo.MedicineProduce" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into medicine_produce (medicine_produce_id, medicine_fk, produce_man, 
+      produce_man_fk, create_time, num, 
+      sale_num)
+    values (#{medicineProduceId,jdbcType=VARCHAR}, #{medicineFk,jdbcType=INTEGER}, #{produceMan,jdbcType=VARCHAR}, 
+      #{produceManFk,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{num,jdbcType=INTEGER}, 
+      #{saleNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bysj.pss.model.pojo.MedicineProduce" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into medicine_produce
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="medicineProduceId != null" >
+        medicine_produce_id,
+      </if>
+      <if test="medicineFk != null" >
+        medicine_fk,
+      </if>
+      <if test="produceMan != null" >
+        produce_man,
+      </if>
+      <if test="produceManFk != null" >
+        produce_man_fk,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="saleNum != null" >
+        sale_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="medicineProduceId != null" >
+        #{medicineProduceId,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineFk != null" >
+        #{medicineFk,jdbcType=INTEGER},
+      </if>
+      <if test="produceMan != null" >
+        #{produceMan,jdbcType=VARCHAR},
+      </if>
+      <if test="produceManFk != null" >
+        #{produceManFk,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="saleNum != null" >
+        #{saleNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bysj.pss.model.pojo.MedicineProduce" >
+    update medicine_produce
+    <set >
+      <if test="medicineProduceId != null" >
+        medicine_produce_id = #{medicineProduceId,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineFk != null" >
+        medicine_fk = #{medicineFk,jdbcType=INTEGER},
+      </if>
+      <if test="produceMan != null" >
+        produce_man = #{produceMan,jdbcType=VARCHAR},
+      </if>
+      <if test="produceManFk != null" >
+        produce_man_fk = #{produceManFk,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="saleNum != null" >
+        sale_num = #{saleNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bysj.pss.model.pojo.MedicineProduce" >
+    update medicine_produce
+    set medicine_produce_id = #{medicineProduceId,jdbcType=VARCHAR},
+      medicine_fk = #{medicineFk,jdbcType=INTEGER},
+      produce_man = #{produceMan,jdbcType=VARCHAR},
+      produce_man_fk = #{produceManFk,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      num = #{num,jdbcType=INTEGER},
+      sale_num = #{saleNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="decreaseNumByPrimaryKey" >
+    update medicine_produce
+    set sale_num = sale_num + ${num}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bysj.pss.mapper.MeterialMapper" >
+  <resultMap id="BaseResultMap" type="com.bysj.pss.model.pojo.Meterial" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="meterial_name" property="meterialName" jdbcType="VARCHAR" />
+    <result column="meterial_other_name" property="meterialOtherName" jdbcType="VARCHAR" />
+    <result column="meterial_size" property="meterialSize" jdbcType="TINYINT" />
+    <result column="saveway" property="saveway" jdbcType="VARCHAR" />
+    <result column="enterprise_id" property="enterpriseId" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="DOUBLE" />
+    <result column="number_need" property="numberNeed" jdbcType="DOUBLE" />
+    <result column="picture_path" property="picturePath" jdbcType="VARCHAR" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, meterial_name, meterial_other_name, meterial_size, saveway, enterprise_id, number, 
+    number_need, picture_path, introduce
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from meterial
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getAllMeterial" resultType="com.bysj.pss.model.pojo.Meterial">
+    SELECT * FROM meterial
+  </select>
+  <select id="search" resultType="com.bysj.pss.model.pojo.Meterial">
+    SELECT * FROM meterial WHERE meterial_name LIKE "%"#{content,jdbcType=VARCHAR}"%"
+    OR meterial_other_name LIKE "%"#{content,jdbcType=VARCHAR}"%"
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from meterial
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bysj.pss.model.pojo.Meterial" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into meterial (meterial_name, meterial_other_name, 
+      meterial_size, saveway, enterprise_id, 
+      number, number_need, picture_path, 
+      introduce)
+    values (#{meterialName,jdbcType=VARCHAR}, #{meterialOtherName,jdbcType=VARCHAR}, 
+      #{meterialSize,jdbcType=TINYINT}, #{saveway,jdbcType=VARCHAR}, #{enterpriseId,jdbcType=INTEGER}, 
+      #{number,jdbcType=DOUBLE}, #{numberNeed,jdbcType=DOUBLE}, #{picturePath,jdbcType=VARCHAR}, 
+      #{introduce,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bysj.pss.model.pojo.Meterial" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into meterial
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="meterialName != null" >
+        meterial_name,
+      </if>
+      <if test="meterialOtherName != null" >
+        meterial_other_name,
+      </if>
+      <if test="meterialSize != null" >
+        meterial_size,
+      </if>
+      <if test="saveway != null" >
+        saveway,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="numberNeed != null" >
+        number_need,
+      </if>
+      <if test="picturePath != null" >
+        picture_path,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="meterialName != null" >
+        #{meterialName,jdbcType=VARCHAR},
+      </if>
+      <if test="meterialOtherName != null" >
+        #{meterialOtherName,jdbcType=VARCHAR},
+      </if>
+      <if test="meterialSize != null" >
+        #{meterialSize,jdbcType=TINYINT},
+      </if>
+      <if test="saveway != null" >
+        #{saveway,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=DOUBLE},
+      </if>
+      <if test="numberNeed != null" >
+        #{numberNeed,jdbcType=DOUBLE},
+      </if>
+      <if test="picturePath != null" >
+        #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bysj.pss.model.pojo.Meterial" >
+    update meterial
+    <set >
+      <if test="meterialName != null" >
+        meterial_name = #{meterialName,jdbcType=VARCHAR},
+      </if>
+      <if test="meterialOtherName != null" >
+        meterial_other_name = #{meterialOtherName,jdbcType=VARCHAR},
+      </if>
+      <if test="meterialSize != null" >
+        meterial_size = #{meterialSize,jdbcType=TINYINT},
+      </if>
+      <if test="saveway != null" >
+        saveway = #{saveway,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=DOUBLE},
+      </if>
+      <if test="numberNeed != null" >
+        number_need = #{numberNeed,jdbcType=DOUBLE},
+      </if>
+      <if test="picturePath != null" >
+        picture_path = #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateNum" >
+    update meterial
+    set number = number + ${number}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateMeterialList" parameterType="java.util.List">
+    update meterial
+    set number =
+    <foreach collection="meterialList" index="index" item="item"
+             separator=" " open="case id" close="end">
+      when #{item.meterialFk} then number-#{item.number}
+    </foreach>
+    where id in
+    <foreach collection="meterialList" index="index" item="item"
+             separator="," open="(" close=")">
+      #{item.meterialFk,jdbcType=INTEGER}
+    </foreach>
+  </update>
+</mapper>

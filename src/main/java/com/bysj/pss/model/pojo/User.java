@@ -1,27 +1,27 @@
 package com.bysj.pss.model.pojo;
 
-import java.util.Date;
-
 public class User {
+    private Integer id;
+
     private Long mobileNumber;
 
     private String userName;
 
     private String userPassword;
 
-    private String userSex;
+    private Byte role;
 
     private String email;
 
-    private String department;
-
-    private String position;
-
-    private Date creatTime;
-
-    private Date lastLoginTime;
-
     private String token;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Long getMobileNumber() {
         return mobileNumber;
@@ -47,12 +47,12 @@ public class User {
         this.userPassword = userPassword == null ? null : userPassword.trim();
     }
 
-    public String getUserSex() {
-        return userSex;
+    public Byte getRole() {
+        return role;
     }
 
-    public void setUserSex(String userSex) {
-        this.userSex = userSex == null ? null : userSex.trim();
+    public void setRole(Byte role) {
+        this.role = role;
     }
 
     public String getEmail() {
@@ -61,38 +61,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department == null ? null : department.trim();
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position == null ? null : position.trim();
-    }
-
-    public Date getCreatTime() {
-        return creatTime;
-    }
-
-    public void setCreatTime(Date creatTime) {
-        this.creatTime = creatTime;
-    }
-
-    public Date getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public void setLastLoginTime(Date lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
     }
 
     public String getToken() {

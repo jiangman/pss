@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bysj.pss.mapper.PrescriptionMapper" >
+  <resultMap id="BaseResultMap" type="com.bysj.pss.model.pojo.Prescription" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="medicine_fk" property="medicineFk" jdbcType="INTEGER" />
+    <result column="meterial_fk" property="meterialFk" jdbcType="INTEGER" />
+    <result column="num" property="num" jdbcType="DOUBLE" />
+    <result column="size" property="size" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, medicine_fk, meterial_fk, num, size
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from prescription
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getPrescription" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from prescription
+    where  medicine_fk = #{medicineFk,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from prescription
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bysj.pss.model.pojo.Prescription" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into prescription (medicine_fk, meterial_fk, num, 
+      size)
+    values (#{medicineFk,jdbcType=INTEGER}, #{meterialFk,jdbcType=INTEGER}, #{num,jdbcType=DOUBLE}, 
+      #{size,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bysj.pss.model.pojo.Prescription" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into prescription
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="medicineFk != null" >
+        medicine_fk,
+      </if>
+      <if test="meterialFk != null" >
+        meterial_fk,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="medicineFk != null" >
+        #{medicineFk,jdbcType=INTEGER},
+      </if>
+      <if test="meterialFk != null" >
+        #{meterialFk,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=DOUBLE},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bysj.pss.model.pojo.Prescription" >
+    update prescription
+    <set >
+      <if test="medicineFk != null" >
+        medicine_fk = #{medicineFk,jdbcType=INTEGER},
+      </if>
+      <if test="meterialFk != null" >
+        meterial_fk = #{meterialFk,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=DOUBLE},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bysj.pss.model.pojo.Prescription" >
+    update prescription
+    set medicine_fk = #{medicineFk,jdbcType=INTEGER},
+      meterial_fk = #{meterialFk,jdbcType=INTEGER},
+      num = #{num,jdbcType=DOUBLE},
+      size = #{size,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,14 +1,45 @@
 package com.bysj.pss.model.matadata;
 
-import java.util.Date;
-
 public class UserMetadata {
+
+
+    private Integer id;
+
     private String userName;
 
-    private String department;
+    private Byte role;
 
-    private String position;
+    private String token;
 
-    private Date lastLoginTime;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Byte getRole() {
+        return role;
+    }
+
+    public void setRole(Byte role) {
+        this.role = role;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
 }
